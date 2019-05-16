@@ -1,0 +1,23 @@
+当修改型号时，keil5会自动切换到别的startup启动文件，此时应当检查startup文件是否被修改了。否则程序会出现不知名错误。
+
+查看是否添加以下内容
+         PRESERVE8
+                THUMB
+				IMPORT xPortPendSVHandler
+				IMPORT xPortSysTickHandler
+				IMPORT vPortSVCHandler
+
+如果没有，就自己再添加一次就好了
+
+ PRESERVE8
+ THUMB
+	IMPORT xPortPendSVHandler
+	IMPORT xPortSysTickHandler
+	IMPORT vPortSVCHandler
+
+ ;DCD     SVC_Handler                		; SVCall Handler
+DCD		vPortSVCHandler
+;DCD     PendSV_Handler             		; PendSV Handler
+DCD		xPortPendSVHandler
+;DCD     SysTick_Handler            		; SysTick Handler
+DCD		xPortSysTickHandler
